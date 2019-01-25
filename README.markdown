@@ -85,6 +85,8 @@ Floaty.framework
 ```sh
 Always Embed Swift Standard Libraries = "YES"
 ```
+![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/02.png)
+
 ở trong **Build Settings**
 - Cấu hình File Info.plist
 ```sh
@@ -95,6 +97,9 @@ NSLocationWhenInUseUsageDescription = "str_description"
 NSMicrophoneUsageDescription = "str_description"
 NSPhotoLibraryUsageDescription = "str_description"
 ```
+
+![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/03.png)
+
 chú ý token được cung cấp theo ID của ứng dụng 
 
 - Cài đặt Google Map và Google Map Place theo hướng dẫn 
