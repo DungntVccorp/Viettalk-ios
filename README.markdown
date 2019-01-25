@@ -78,6 +78,9 @@ SwipeCellKit.framework
 TOCropViewController.framework
 Floaty.framework
 ```
+
+![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/01.png)
+
 - Nếu sử dụng cho **Objective C** Project 
 ```sh
 Always Embed Swift Standard Libraries = "YES"
