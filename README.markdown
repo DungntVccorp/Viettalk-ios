@@ -79,7 +79,7 @@ TOCropViewController.framework
 Floaty.framework
 ```
 
-![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/01.png)
+![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/01.png)
 
 - Nếu sử dụng cho **Objective C** Project 
 ```sh
