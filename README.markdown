@@ -16,7 +16,7 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 - giao diện nhận và trả lời cuộc gọi đến
 - giao diện gọi đi
 
-# SDK gồm có!
+# API gồm có!
 - **CoreDM.framework** ==> chứa kiến trúc và giao tiếp kết nối tới  server
 - **ProtoModel.framework** ==> chứa định nghĩa model
 - **VietTalkCore.framework** ==> Chứa api chat và báo hiệu
