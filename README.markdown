@@ -16,7 +16,7 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 - giao diện nhận và trả lời cuộc gọi đến
 - giao diện gọi đi
 
-# API gồm có!
+# SDK gồm có!
 - **CoreDM.framework** ==> chứa kiến trúc và giao tiếp kết nối tới  server
 - **ProtoModel.framework** ==> chứa định nghĩa model
 - **VietTalkCore.framework** ==> Chứa api chat và báo hiệu
@@ -39,6 +39,8 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 | TOCropViewController | https://github.com/TimOliver/TOCropViewController
 | THContactPickerCart | https://github.com/DungntVccorp/THContactPickerCart
 | Floaty | https://github.com/kciter/Floaty
+| DZNEmptyDataSet | https://github.com/dzenbot/DZNEmptyDataSet
+| protobuf-swift | https://github.com/alexeyxo/protobuf-swift
 | Google Map SDK | https://developers.google.com/maps/documentation/ios-sdk/intro
 | Google Places SDK | https://developers.google.com/places/ios-sdk/intro
 
@@ -77,16 +79,12 @@ SwiftLinkPreview.framework
 SwipeCellKit.framework
 TOCropViewController.framework
 Floaty.framework
+DZNEmptyDataSet.framework
 ```
-
-![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/01.png)
-
 - Nếu sử dụng cho **Objective C** Project 
 ```sh
 Always Embed Swift Standard Libraries = "YES"
 ```
-![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/02.png)
-
 ở trong **Build Settings**
 - Cấu hình File Info.plist
 ```sh
@@ -97,9 +95,6 @@ NSLocationWhenInUseUsageDescription = "str_description"
 NSMicrophoneUsageDescription = "str_description"
 NSPhotoLibraryUsageDescription = "str_description"
 ```
-
-![Screenshot](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/03.png)
-
 chú ý token được cung cấp theo ID của ứng dụng 
 
 - Cài đặt Google Map và Google Map Place theo hướng dẫn 
