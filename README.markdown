@@ -182,7 +182,7 @@ chú ý token được cung cấp theo ID của ứng dụng
 }
 ```
 ### Sử dụng trên Objective C
-- Dể show lên màn hình lịch danh sách lịch sử tin nhắn 
+- Dể Hiển thị danh sách cuộc hội thoại cũ 
 ```sh
 if([[ViettalkUI shared] canShowChatHistory] == YES){
         [[ViettalkUI shared] showChatHistory:view_controller isPush:NO];
