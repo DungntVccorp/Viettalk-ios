@@ -96,55 +96,126 @@ NSMicrophoneUsageDescription = "str_description"
 NSPhotoLibraryUsageDescription = "str_description"
 ```
 chú ý token được cung cấp theo ID của ứng dụng 
-- Cấu hình script build
-```sh
-echo "Target architectures: $ARCHS"
 
-APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
-
-find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
-do
-FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
-FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
-echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
-echo $(lipo -info "$FRAMEWORK_EXECUTABLE_PATH")
-
-FRAMEWORK_TMP_PATH="$FRAMEWORK_EXECUTABLE_PATH-tmp"
-
-# remove simulator's archs if location is not simulator's directory
-case "${TARGET_BUILD_DIR}" in
-*"iphonesimulator")
-echo "No need to remove archs"
-;;
-*)
-if $(lipo "$FRAMEWORK_EXECUTABLE_PATH" -verify_arch "i386") ; then
-lipo -output "$FRAMEWORK_TMP_PATH" -remove "i386" "$FRAMEWORK_EXECUTABLE_PATH"
-echo "i386 architecture removed"
-rm "$FRAMEWORK_EXECUTABLE_PATH"
-mv "$FRAMEWORK_TMP_PATH" "$FRAMEWORK_EXECUTABLE_PATH"
-fi
-if $(lipo "$FRAMEWORK_EXECUTABLE_PATH" -verify_arch "x86_64") ; then
-lipo -output "$FRAMEWORK_TMP_PATH" -remove "x86_64" "$FRAMEWORK_EXECUTABLE_PATH"
-echo "x86_64 architecture removed"
-rm "$FRAMEWORK_EXECUTABLE_PATH"
-mv "$FRAMEWORK_TMP_PATH" "$FRAMEWORK_EXECUTABLE_PATH"
-fi
-;;
-esac
-
-echo "Completed for executable $FRAMEWORK_EXECUTABLE_PATH"
-echo $(lipo -info "$FRAMEWORK_EXECUTABLE_PATH")
-
-done    
-
-```
 - Cài đặt Google Map và Google Map Place theo hướng dẫn 
 
 [GOOGLE MAP](https://developers.google.com/maps/documentation/ios-sdk/start)
 
 [GOOGLE MAP PLACES](https://developers.google.com/places/ios-sdk/start#step-2-install-the-api)
 
-### Sử dụng trên Project Objective C
+### Cấu Hình Sử dụng trên Project Objective C
+- ở class AppDelegate import
+```sh
+@import GoogleMaps;
+@import GooglePlaces;
+@import VietTalkCore;
+@import ViettalkUI;
+@import ViettalkCallUI;
+#import <VTCallAPI/ViettalkCallAPI.h>
+```
+- Trong file AppDelegate.m thêm code ở trong hàm **didFinishLaunchingWithOptions**
+```sh
+    [GMSServices provideAPIKey:@"map_key"];
+    [GMSPlacesClient provideAPIKey:@"map_key"];
+    [[ViettalkAPI shared] setViettalkAPIDelegateWithDelegate:self];
+```
+- Trong file AppDelegate.m thực thi hàm delegate của **ViettalkCallAPIDelegate** và **ViettalkAPIDelegate**
+```sh
+-(void)onReceiveMessageWithForm:(NSData *)ChatID :(NSData *)messageID{
+    
+}
+-(void)onReceiveState:(NSInteger)state error:(NSString *)error{
+    if(state == ViettalkApiStateAuthen_error){
+        /// RETRY AUTHEN
+        if([error isEqualToString:@""] == NO){
+            UIAlertController *alr = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+            [alr addAction:[UIAlertAction actionWithTitle:@"Đóng" style:UIAlertActionStyleDefault handler:nil]];
+            [alr addAction:[UIAlertAction actionWithTitle:@"Thử lại" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [self.window.rootViewController presentViewController:alr animated:YES completion:nil];
+        }
+    }else if(state == ViettalkApiStateAuthen_success){
+        
+        /// CẤU HÌNH CALL NẾU SỬ DỤNG CALL TRONG ỨNG DỤNG
+        NSDictionary *data_login = [[ViettalkAPI shared] get_user_login];
+        NSString *sipDomain = data_login[@"sipDomain"];
+        NSString *sipPassword = data_login[@"sipPassword"];
+        NSString *sipProxy = data_login[@"sipProxy"];
+        NSString *sipUserName = data_login[@"sipUserName"];
+        [[ViettalkCallAPI sharedInstance] setDelegate:self];
+        [[ViettalkCallAPI sharedInstance] setupAccont:sipUserName password:sipPassword domain:sipDomain proxy:sipProxy];
+        
+        UIAlertController *alr = [UIAlertController alertControllerWithTitle:nil message:@"Đăng nhập hệ thống chat thành công" preferredStyle:UIAlertControllerStyleAlert];
+        [alr addAction:[UIAlertAction actionWithTitle:@"Đóng" style:UIAlertActionStyleDefault handler:nil]];
+        [self.window.rootViewController presentViewController:alr animated:YES completion:nil];
+        
+    }else if(state == ViettalkApiStateAuthen_failure){
+        
+    }
+    
+}
+
+-(void)onReceiveNewIncomingCall:(NSDictionary *)newCall{
+    
+    if ([[ViettalkUI shared] canMakeCall] == YES) {
+        [[ViettalkUI shared] showIncommingCall:self.window.rootViewController call_info:newCall];
+    }
+}
+```
+- Trong file AppDelegate.m bổ sung sử dụng trạng thái của ứng dụng 
+```sh
+- (void)applicationWillResignActive:(UIApplication *)application {
+    [[ViettalkAPI shared] applicationWillResignActive:application];
+}
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[ViettalkAPI shared] applicationDidEnterBackground:application];
+}
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[ViettalkAPI shared] applicationWillEnterForeground:application];
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[ViettalkAPI shared] applicationDidBecomeActive:application];
+}
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [[ViettalkAPI shared] applicationWillTerminate:application];
+}
+```
+### Sử dụng trên Objective C
+- Dể show lên màn hình lịch danh sách lịch sử tin nhắn 
+```sh
+if([[ViettalkUI shared] canShowChatHistory] == YES){
+        [[ViettalkUI shared] showChatHistory:view_controller isPush:NO];
+}
+```
+- Để hiển thị chi tiết một cuộc hội thoại 
+```sh
+if([[ViettalkUI shared] canShowMessage] == YES){
+    
+    [[ViettalkUI shared] showChatWithTel:self isPush:FALSE tel:phone_number_string_84xxxxx nameDisplay:name_display_string];
+    }
+```
+
+- Để tạo 1 group chat mới
+```sh
+[[ViettalkAPI shared] createChatWorkSpaceWithProfiles:new_profile_list isGroup:isG onSuccess:^(Chat *result_create_chat) {
+            [[ViettalkUI shared] showChat:self isPush:FALSE chat:result_create_chat];
+        } onError:^(id er) {
+            NSLog(@"%@",er);
+        } onTimeout:^(id timeout) {
+            NSLog(@"TIME OUT");
+        }];
+```
+
+
+- Để thực hiện call đến 1 số 
+```sh
+if([[ViettalkUI shared] canMakeCall] == YES){
+        [[ViettalkUI shared] showMakeCall:self tel:phone_number_string_84xxxxx name:name_display_string];
+    }
+```
+
+
 
 ### Sử dụng trên Project Swift Project
 
