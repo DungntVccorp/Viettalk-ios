@@ -188,7 +188,7 @@ if([[ViettalkUI shared] canShowChatHistory] == YES){
         [[ViettalkUI shared] showChatHistory:view_controller isPush:NO];
 }
 ```
-- Để hiển thị chi tiết một cuộc hội thoại 
+- Để hiển thị chi tiết một cuộc hội thoại  hoặc  tạo mới một cuộc  hôị  thoại 
 ```sh
 if([[ViettalkUI shared] canShowMessage] == YES){
     
