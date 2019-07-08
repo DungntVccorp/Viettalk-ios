@@ -16,36 +16,57 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 - giao diện nhận và trả lời cuộc gọi đến
 - giao diện gọi đi
 
+# Kiến trúc chung
+
+![Alt text](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/05.png)
+
+
 # SDK gồm có!
-- **CoreDM.framework** ==> chứa kiến trúc và giao tiếp kết nối tới  server
+- **CoreDM.framework** ==> chứa kiến trúc database và giao tiếp kết nối tới  server
 - **ProtoModel.framework** ==> chứa định nghĩa model
 - **VietTalkCore.framework** ==> Chứa api chat và báo hiệu
 - **VTCallAPI.framework** ==> chứa những api Liên quan VOIP
 - **ViettalkUI.framework** ==> chứa giao diện chat
 - **ViettalkCallUI.framework** ==> chứa giao diện gọi điện
 
-### Thư viện phụ thuộc bên thứ 3 kèm theo
-
-| Third party | Link |
-| ------ | ------ |
-| SwiftLinkPreview | https://github.com/LeonardoCardoso/SwiftLinkPreview
-| SnapKit | https://github.com/SnapKit/SnapKit
-| Kingfisher | https://github.com/onevcat/Kingfisher
-| SwipeCellKit | https://github.com/SwipeCellKit/SwipeCellKit
-| CLImageEditorCarthage | https://github.com/DungntVccorp/CLImageEditorCarthage
-| Pulsator | https://github.com/shu223/Pulsator
-| SKPhotoBrowser | https://github.com/suzuki-0000/SKPhotoBrowser
-| MBProgressHUD | https://github.com/jdg/MBProgressHUD
-| TOCropViewController | https://github.com/TimOliver/TOCropViewController
-| THContactPickerCart | https://github.com/DungntVccorp/THContactPickerCart
-| Floaty | https://github.com/kciter/Floaty
-| DZNEmptyDataSet | https://github.com/dzenbot/DZNEmptyDataSet
-| protobuf-swift | https://github.com/alexeyxo/protobuf-swift
-| Google Map SDK | https://developers.google.com/maps/documentation/ios-sdk/intro
-| Google Places SDK | https://developers.google.com/places/ios-sdk/intro
+### ProtoModel.framework Dependency
+| Framework Name| Link | Version |
+| ------ | ------ | ------ |
+| protobuf-swift | https://github.com/alexeyxo/protobuf-swift | v4.0.6
+### VietTalkCore.framework Dependency
+| Framework Name| Link | Version |
+| ------ | ------ | ------ |
+| CoreDM | cung cấp cùng thư viện | 0.1
+| PhoneNumberKit | https://github.com/marmelroy/PhoneNumberKit | 2.6.0
+### VTCallAPI.framework Dependency
+| Framework Name | Link | Version
+| ------ | ------ | ------ |
+| VietTalkCore | cung cấp cùng thư viện | 0.1
+| AudioToolBox | System framework |
+| AVFoundation |  System framework | 
+### ViettalkUI.framework Dependency
+| Framework Name | Link | Version
+| ------ | ------ | ------ |
+| SwiftLinkPreview | https://github.com/LeonardoCardoso/SwiftLinkPreview | 3.0.1
+| SnapKit | https://github.com/SnapKit/SnapKit | 5.0.0
+| Kingfisher | https://github.com/onevcat/Kingfisher | 4.10.0 
+| SwipeCellKit | https://github.com/SwipeCellKit/SwipeCellKit | master
+| CLImageEditorCarthage | https://github.com/DungntVccorp/CLImageEditorCarthage | master
+| Pulsator | https://github.com/shu223/Pulsator | 0.5.3 
+| SKPhotoBrowser | https://github.com/suzuki-0000/SKPhotoBrowser | 6.1.0
+| MBProgressHUD | https://github.com/jdg/MBProgressHUD | 1.1.0 
+| TOCropViewController | https://github.com/TimOliver/TOCropViewController | master
+| THContactPickerCart | https://github.com/DungntVccorp/THContactPickerCart | master 
+| Floaty | https://github.com/kciter/Floaty | 4.2.0
+| DZNEmptyDataSet | https://github.com/dzenbot/DZNEmptyDataSet | v1.8.1
+| Google Map SDK | https://developers.google.com/maps/documentation/ios-sdk/intro | master
+| Google Places SDK | https://developers.google.com/places/ios-sdk/intro | master
+### ViettalkUI.framework Dependency
+| Framework Name | Link | Version
+| ------ | ------ | ------ |
+| ViettalkUI | cung cấp cùng thư viện | 0.1
 
 ### Yêu cầu hệ thống
-
 - iOS 9.0+ / Mac OS X 10.14+
 - Xcode 10.1+
 - Swift 4.2+
@@ -65,7 +86,7 @@ VietTalkCore.framework
 ViettalkUI.framework
 VTCallAPI.framework
 ```
-3nd Framework
+3rd Framework
 ```sh
 CLImage.framework
 ContactPickerFramework.framework
@@ -81,10 +102,12 @@ TOCropViewController.framework
 Floaty.framework
 DZNEmptyDataSet.framework
 ```
+![Alt text](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/01.png)
 - Nếu sử dụng cho **Objective C** Project 
 ```sh
 Always Embed Swift Standard Libraries = "YES"
 ```
+![Alt text](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/02.png)
 ở trong **Build Settings**
 - Cấu hình File Info.plist
 ```sh
@@ -95,6 +118,7 @@ NSLocationWhenInUseUsageDescription = "str_description"
 NSMicrophoneUsageDescription = "str_description"
 NSPhotoLibraryUsageDescription = "str_description"
 ```
+![Alt text](https://raw.githubusercontent.com/DungntVccorp/Viettalk-ios/master/03.png)
 chú ý token được cung cấp theo ID của ứng dụng 
 
 - Cài đặt Google Map và Google Map Place theo hướng dẫn 
