@@ -37,6 +37,7 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 | Framework Name| Link | Version |
 | ------ | ------ | ------ |
 | CoreDM | cung cấp cùng thư viện | 0.1
+| ProtoModel | cung cấp cùng thư viện | 0.1
 | PhoneNumberKit | https://github.com/marmelroy/PhoneNumberKit | 2.6.0
 ### VTCallAPI.framework Dependency
 | Framework Name | Link | Version
@@ -47,6 +48,7 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 ### ViettalkUI.framework Dependency
 | Framework Name | Link | Version
 | ------ | ------ | ------ |
+| VietTalkCore | cung cấp cùng thư viện | 0.1
 | SwiftLinkPreview | https://github.com/LeonardoCardoso/SwiftLinkPreview | 3.0.1
 | SnapKit | https://github.com/SnapKit/SnapKit | 5.0.0
 | Kingfisher | https://github.com/onevcat/Kingfisher | 4.10.0 
@@ -61,11 +63,11 @@ Tài liệu hướng dẫn tích hợp chức năng chat và gọi điện  củ
 | DZNEmptyDataSet | https://github.com/dzenbot/DZNEmptyDataSet | v1.8.1
 | Google Map SDK | https://developers.google.com/maps/documentation/ios-sdk/intro | master
 | Google Places SDK | https://developers.google.com/places/ios-sdk/intro | master
-### ViettalkUI.framework Dependency
+### ViettalkCallUI.framework Dependency
 | Framework Name | Link | Version
 | ------ | ------ | ------ |
 | ViettalkUI | cung cấp cùng thư viện | 0.1
-
+| VTCallAPI | cung cấp cùng thư viện | 0.1
 ### Yêu cầu hệ thống
 - iOS 9.0+ / Mac OS X 10.14+
 - Xcode 10.1+
@@ -246,13 +248,15 @@ if([[ViettalkUI shared] canMakeCall] == YES){
 
 ### Todos
 - [x] Demo trên objective C Project
-- [ ] Demo trên swift project
+- [x] Demo trên swift project
+- [x] Hướng dẫn sử dụng  UI 
 - [ ] Hướng dẫn sử dụng và tài liệu API
 - [ ] Hỗ trợ giao diện iPad
+- [ ] Hỗ trợ Ipad OS
 - [ ] Hỗ trợ push notification
 - [ ] Hỗ trợ wake up call
 
 License
 ----
 
-**VIETTALK COPYRIGHT 2019 @ VIVAS - VNPT TECHNOLOGY**
+**VIETTALK COPYRIGHT 2019 @ VIVAS - VIETTALK TEAM**
